@@ -16,7 +16,7 @@ export declare class QuotesController extends BaseController {
         data: any;
         timestamp: string;
     }>;
-    create(data: CreateQuoteDto, document?: Express.Multer.File): Promise<void | {
+    create(data: CreateQuoteDto, documents?: Express.Multer.File[]): Promise<void | {
         success: boolean;
         message: string | undefined;
         data: any;

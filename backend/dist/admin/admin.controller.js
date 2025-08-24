@@ -137,6 +137,12 @@ let AdminController = class AdminController {
     async getOutsourcingStats() {
         return this.adminService.getOutsourcingStats();
     }
+    async deleteOutsourcingRequest(id) {
+        return this.adminService.deleteOutsourcingRequest(id);
+    }
+    async exportOutsourcingData(format = 'csv') {
+        return this.adminService.exportOutsourcingData(format);
+    }
     async getSystemSettings() {
         return this.adminService.getSystemSettings();
     }
@@ -428,6 +434,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getOutsourcingStats", null);
+__decorate([
+    (0, common_1.Delete)('outsourcing/:id'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "deleteOutsourcingRequest", null);
+__decorate([
+    (0, common_1.Get)('outsourcing/export'),
+    __param(0, (0, common_1.Query)('format')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "exportOutsourcingData", null);
 __decorate([
     (0, common_1.Get)('settings'),
     __metadata("design:type", Function),

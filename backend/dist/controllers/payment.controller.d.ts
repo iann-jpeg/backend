@@ -6,18 +6,18 @@ export declare class PaymentController {
     findAll(page?: number, limit?: number, status?: string): Promise<{
         data: ({
             user: {
-                name: string;
-                id: number;
                 email: string;
+                id: number;
+                name: string;
             } | null;
         } & {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -38,18 +38,18 @@ export declare class PaymentController {
     }>;
     findOne(id: string, req: any): Promise<{
         user: {
-            name: string;
-            id: number;
             email: string;
+            id: number;
+            name: string;
         } | null;
     } & {
-        id: number;
         email: string;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
         userId: number | null;
         policyNumber: string | null;
-        status: string;
         clientName: string;
         amount: number;
         paymentMethod: string;
@@ -76,13 +76,13 @@ export declare class PaymentController {
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -99,13 +99,13 @@ export declare class PaymentController {
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -122,13 +122,13 @@ export declare class PaymentController {
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -145,13 +145,13 @@ export declare class PaymentController {
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -165,10 +165,10 @@ export declare class PaymentController {
         };
     }>;
     getPaymentStatus(id: string): Promise<{
-        id: number;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
-        status: string;
+        id: number;
         amount: number;
         paymentMethod: string;
         transactionId: string | null;

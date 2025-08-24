@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuotesController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
+const common_2 = require("@nestjs/common");
 const multer_1 = require("multer");
 const path_1 = require("path");
 const quotes_service_1 = require("../services/quotes.service");
@@ -47,12 +48,9 @@ let QuotesController = class QuotesController extends base_controller_1.BaseCont
             return this.handleError(error);
         }
     }
-    async create(data, document) {
+    async create(data, documents) {
         try {
-            if (document) {
-                data.documentPath = document.path;
-            }
-            const quote = await this.quotesService.create(data);
+            const quote = await this.quotesService.createWithDocuments(data, documents);
             return this.handleSuccess(quote, 'Quote created successfully');
         }
         catch (error) {
@@ -105,7 +103,7 @@ __decorate([
 __decorate([
     (0, public_decorator_1.Public)(),
     (0, common_1.Post)(),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('document', {
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('document', 10, {
         storage: (0, multer_1.diskStorage)({
             destination: './uploads/quotes',
             filename: (req, file, callback) => {
@@ -125,9 +123,9 @@ __decorate([
         },
     })),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_2.UploadedFiles)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [quote_dto_1.CreateQuoteDto, Object]),
+    __metadata("design:paramtypes", [quote_dto_1.CreateQuoteDto, Array]),
     __metadata("design:returntype", Promise)
 ], QuotesController.prototype, "create", null);
 __decorate([
