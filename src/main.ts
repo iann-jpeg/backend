@@ -39,17 +39,17 @@ async function bootstrap() {
   );
 
   // Configure CORS for frontend
-  app.enableCors({
-    origin: [
-      'https://your-vercel-domain.vercel.app',
-      'http://localhost:3000'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
-    credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 200,
-  });
+    app.enableCors({
+      origin: [
+        'https://galloway-secure-kenya.vercel.app',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+      ],
+      credentials: true,
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
+      exposedHeaders: 'Authorization',
+    });
 
   // Set API prefix
   app.setGlobalPrefix('api');
