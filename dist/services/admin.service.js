@@ -1422,6 +1422,66 @@ let AdminService = class AdminService {
             };
         }
     }
+    async deleteQuote(id) {
+        try {
+            const quote = await this.prisma.quote.delete({
+                where: { id }
+            });
+            return {
+                success: true,
+                data: quote,
+                message: 'Quote deleted successfully'
+            };
+        }
+        catch (error) {
+            console.error('Delete quote error:', error);
+            return {
+                success: false,
+                error: error.message || 'Failed to delete quote'
+            };
+        }
+    }
+    async exportQuotesData(format) {
+        try {
+            const quotes = await this.prisma.quote.findMany({
+                orderBy: { createdAt: 'desc' },
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true
+                        }
+                    }
+                }
+            });
+            if (format === 'csv') {
+                const csvHeaders = 'ID,First Name,Last Name,Email,Phone,Product,Location,Budget,Coverage,Status,Contact Method,Best Time,Created At';
+                const csvData = quotes
+                    .map(quote => `${quote.id},"${quote.firstName}","${quote.lastName}","${quote.email}","${quote.phone}","${quote.product}","${quote.location || ''}","${quote.budget || ''}","${quote.coverage || ''}","${quote.status}","${quote.contactMethod}","${quote.bestTime || ''}","${quote.createdAt.toISOString()}"`)
+                    .join('\n');
+                return {
+                    success: true,
+                    data: csvHeaders + '\n' + csvData,
+                    message: 'Quotes exported as CSV'
+                };
+            }
+            else {
+                return {
+                    success: true,
+                    data: JSON.stringify(quotes, null, 2),
+                    message: 'Quotes exported as JSON'
+                };
+            }
+        }
+        catch (error) {
+            console.error('Export quotes error:', error);
+            return {
+                success: false,
+                error: error.message || 'Failed to export quotes'
+            };
+        }
+    }
     async getAllDiasporaRequests(page = 1, limit = 50, status, search) {
         try {
             const skip = (page - 1) * limit;
@@ -2171,6 +2231,90 @@ let AdminService = class AdminService {
                     generatedAt: new Date().toISOString()
                 },
                 message: 'Failed to fetch outsourcing stats'
+            };
+        }
+    }
+    async deleteOutsourcingRequest(id) {
+        try {
+            const existingRequest = await this.prisma.outsourcingRequest.findUnique({
+                where: { id }
+            });
+            if (!existingRequest) {
+                return {
+                    success: false,
+                    message: 'Outsourcing request not found'
+                };
+            }
+            await this.prisma.outsourcingRequest.delete({
+                where: { id }
+            });
+            return {
+                success: true,
+                message: 'Outsourcing request deleted successfully'
+            };
+        }
+        catch (error) {
+            console.error('Delete outsourcing request error:', error);
+            return {
+                success: false,
+                message: 'Failed to delete outsourcing request',
+                error: error.message
+            };
+        }
+    }
+    async exportOutsourcingData(format = 'csv') {
+        try {
+            const requests = await this.prisma.outsourcingRequest.findMany({
+                orderBy: { createdAt: 'desc' },
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            email: true
+                        }
+                    }
+                }
+            });
+            if (format === 'json') {
+                return {
+                    success: true,
+                    data: JSON.stringify(requests, null, 2)
+                };
+            }
+            else {
+                const headers = [
+                    'ID', 'Organization Name', 'Core Functions', 'Location', 'Email',
+                    'Services', 'Nature of Outsourcing', 'Budget Range', 'Status',
+                    'Created At', 'Updated At'
+                ];
+                const csvData = requests.map(req => [
+                    req.id,
+                    req.organizationName || '',
+                    req.coreFunctions || '',
+                    req.location || '',
+                    req.email || '',
+                    Array.isArray(req.services) ? req.services.join('; ') : req.services || '',
+                    req.natureOfOutsourcing || '',
+                    req.budgetRange || '',
+                    req.status || '',
+                    req.createdAt.toISOString(),
+                    req.updatedAt.toISOString()
+                ]);
+                const csvContent = [headers, ...csvData]
+                    .map(row => row.map(cell => `"${cell}"`).join(','))
+                    .join('\n');
+                return {
+                    success: true,
+                    data: csvContent
+                };
+            }
+        }
+        catch (error) {
+            console.error('Export outsourcing data error:', error);
+            return {
+                success: false,
+                message: 'Failed to export outsourcing data',
+                error: error.message
             };
         }
     }

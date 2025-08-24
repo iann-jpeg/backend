@@ -20,8 +20,8 @@ export declare class AdminService {
                 action: string;
                 description: string;
                 user: {
-                    name: string;
                     email: string;
+                    name: string;
                 } | null;
                 timestamp: Date;
             }[];
@@ -166,8 +166,8 @@ export declare class AdminService {
             action: string;
             description: string;
             user: {
-                name: string;
                 email: string;
+                name: string;
             } | null;
             timestamp: Date;
         }[];
@@ -183,16 +183,16 @@ export declare class AdminService {
         success: boolean;
         data: {
             users: {
-                role: import(".prisma/client").$Enums.Role;
-                _count: {
-                    claims: number;
-                    quotes: number;
-                };
-                id: number;
-                name: string;
                 email: string;
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
+                name: string;
+                _count: {
+                    quotes: number;
+                    claims: number;
+                };
+                role: import(".prisma/client").$Enums.Role;
             }[];
             pagination: {
                 total: number;
@@ -243,12 +243,12 @@ export declare class AdminService {
     } | {
         success: boolean;
         data: {
-            role: import(".prisma/client").$Enums.Role;
-            id: number;
-            name: string;
             email: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
+            name: string;
+            role: import(".prisma/client").$Enums.Role;
         };
         message: string;
         error?: undefined;
@@ -272,18 +272,18 @@ export declare class AdminService {
         data: {
             claims: ({
                 user: {
+                    email: string;
                     id: number;
                     name: string;
-                    email: string;
                 } | null;
             } & {
-                id: number;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                status: string;
-                description: string;
+                id: number;
                 userId: number | null;
                 policyNumber: string;
+                description: string;
                 claimType: string;
                 incidentDate: Date;
                 estimatedLoss: number;
@@ -336,18 +336,18 @@ export declare class AdminService {
         success: boolean;
         data: {
             user: {
+                email: string;
                 id: number;
                 name: string;
-                email: string;
             } | null;
         } & {
-            id: number;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            status: string;
-            description: string;
+            id: number;
             userId: number | null;
             policyNumber: string;
+            description: string;
             claimType: string;
             incidentDate: Date;
             estimatedLoss: number;
@@ -376,30 +376,30 @@ export declare class AdminService {
     } | {
         success: boolean;
         data: {
-            user: {
-                id: number;
-                name: string;
-                email: string;
-                profile: {
-                    phone: string | null;
-                } | null;
-            } | null;
             documents: {
-                id: number;
                 createdAt: Date;
+                id: number;
                 filename: string;
                 originalName: string;
                 mimeType: string;
                 size: number;
             }[];
+            user: {
+                email: string;
+                id: number;
+                name: string;
+                profile: {
+                    phone: string | null;
+                } | null;
+            } | null;
         } & {
-            id: number;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            status: string;
-            description: string;
+            id: number;
             userId: number | null;
             policyNumber: string;
+            description: string;
             claimType: string;
             incidentDate: Date;
             estimatedLoss: number;
@@ -422,23 +422,23 @@ export declare class AdminService {
         data: {
             consultations: ({
                 user: {
+                    email: string;
                     id: number;
                     name: string;
-                    email: string;
                     profile: {
                         phone: string | null;
                     } | null;
                 } | null;
             } & {
-                id: number;
-                name: string;
                 email: string;
+                phone: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                message: string;
-                status: string;
+                id: number;
                 userId: number | null;
-                phone: string;
+                name: string;
+                message: string;
                 country: string | null;
                 timezone: string | null;
                 scheduledAt: Date | null;
@@ -481,23 +481,23 @@ export declare class AdminService {
         success: boolean;
         data: {
             user: {
+                email: string;
                 id: number;
                 name: string;
-                email: string;
                 profile: {
                     phone: string | null;
                 } | null;
             } | null;
         } & {
-            id: number;
-            name: string;
             email: string;
+            phone: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            message: string;
-            status: string;
+            id: number;
             userId: number | null;
-            phone: string;
+            name: string;
+            message: string;
             country: string | null;
             timezone: string | null;
             scheduledAt: Date | null;
@@ -522,20 +522,20 @@ export declare class AdminService {
         success: boolean;
         data: {
             user: {
+                email: string;
                 id: number;
                 name: string;
-                email: string;
             } | null;
         } & {
-            id: number;
-            name: string;
             email: string;
+            phone: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            message: string;
-            status: string;
+            id: number;
             userId: number | null;
-            phone: string;
+            name: string;
+            message: string;
             country: string | null;
             timezone: string | null;
             scheduledAt: Date | null;
@@ -571,23 +571,23 @@ export declare class AdminService {
         data: {
             consultation: {
                 user: {
+                    email: string;
                     id: number;
                     name: string;
-                    email: string;
                     profile: {
                         phone: string | null;
                     } | null;
                 } | null;
             } & {
-                id: number;
-                name: string;
                 email: string;
+                phone: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                message: string;
-                status: string;
+                id: number;
                 userId: number | null;
-                phone: string;
+                name: string;
+                message: string;
                 country: string | null;
                 timezone: string | null;
                 scheduledAt: Date | null;
@@ -609,9 +609,9 @@ export declare class AdminService {
                 notes: any;
             };
             client: {
+                email: string;
                 id: number;
                 name: string;
-                email: string;
                 profile: {
                     phone: string | null;
                 } | null;
@@ -654,19 +654,14 @@ export declare class AdminService {
         data: {
             quotes: ({
                 user: {
+                    email: string;
                     id: number;
                     name: string;
-                    email: string;
                 } | null;
             } & {
-                id: number;
-                email: string;
-                createdAt: Date;
-                updatedAt: Date;
-                status: string;
-                userId: number | null;
                 firstName: string;
                 lastName: string;
+                email: string;
                 phone: string;
                 location: string | null;
                 product: string;
@@ -675,6 +670,11 @@ export declare class AdminService {
                 details: string | null;
                 contactMethod: string;
                 bestTime: string | null;
+                status: string;
+                createdAt: Date;
+                updatedAt: Date;
+                id: number;
+                userId: number | null;
             })[];
             pagination: {
                 total: number;
@@ -702,34 +702,29 @@ export declare class AdminService {
     getQuoteById(id: number): Promise<{
         success: boolean;
         data: {
-            user: {
-                id: number;
-                name: string;
-                email: string;
-            } | null;
             documents: {
-                id: number;
                 createdAt: Date;
                 updatedAt: Date;
+                id: number;
                 filename: string;
                 originalName: string;
                 mimeType: string;
                 size: number;
                 path: string;
+                content: Uint8Array | null;
                 claimId: number | null;
                 quoteId: number | null;
-                content: Uint8Array | null;
                 outsourcingId: number | null;
             }[];
+            user: {
+                email: string;
+                id: number;
+                name: string;
+            } | null;
         } & {
-            id: number;
-            email: string;
-            createdAt: Date;
-            updatedAt: Date;
-            status: string;
-            userId: number | null;
             firstName: string;
             lastName: string;
+            email: string;
             phone: string;
             location: string | null;
             product: string;
@@ -738,6 +733,11 @@ export declare class AdminService {
             details: string | null;
             contactMethod: string;
             bestTime: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
+            id: number;
+            userId: number | null;
         };
         error?: undefined;
     } | {
@@ -748,14 +748,9 @@ export declare class AdminService {
     updateQuoteStatus(id: number, status: string): Promise<{
         success: boolean;
         data: {
-            id: number;
-            email: string;
-            createdAt: Date;
-            updatedAt: Date;
-            status: string;
-            userId: number | null;
             firstName: string;
             lastName: string;
+            email: string;
             phone: string;
             location: string | null;
             product: string;
@@ -764,7 +759,51 @@ export declare class AdminService {
             details: string | null;
             contactMethod: string;
             bestTime: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
+            id: number;
+            userId: number | null;
         };
+        message: string;
+        error?: undefined;
+    } | {
+        success: boolean;
+        error: any;
+        data?: undefined;
+        message?: undefined;
+    }>;
+    deleteQuote(id: number): Promise<{
+        success: boolean;
+        data: {
+            firstName: string;
+            lastName: string;
+            email: string;
+            phone: string;
+            location: string | null;
+            product: string;
+            budget: string | null;
+            coverage: string | null;
+            details: string | null;
+            contactMethod: string;
+            bestTime: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
+            id: number;
+            userId: number | null;
+        };
+        message: string;
+        error?: undefined;
+    } | {
+        success: boolean;
+        error: any;
+        data?: undefined;
+        message?: undefined;
+    }>;
+    exportQuotesData(format: 'csv' | 'json'): Promise<{
+        success: boolean;
+        data: string;
         message: string;
         error?: undefined;
     } | {
@@ -778,19 +817,19 @@ export declare class AdminService {
         data: {
             diasporaRequests: ({
                 user: {
+                    email: string;
                     id: number;
                     name: string;
-                    email: string;
                 } | null;
             } & {
-                id: number;
-                name: string;
                 email: string;
+                phone: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                status: string;
+                id: number;
                 userId: number | null;
-                phone: string;
+                name: string;
                 country: string;
                 timezone: string;
                 scheduledAt: Date | null;
@@ -823,19 +862,19 @@ export declare class AdminService {
         success: boolean;
         data: {
             user: {
+                email: string;
                 id: number;
                 name: string;
-                email: string;
             } | null;
         } & {
-            id: number;
-            name: string;
             email: string;
+            phone: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            status: string;
+            id: number;
             userId: number | null;
-            phone: string;
+            name: string;
             country: string;
             timezone: string;
             scheduledAt: Date | null;
@@ -850,14 +889,14 @@ export declare class AdminService {
     updateDiasporaRequestStatus(id: number, status: string): Promise<{
         success: boolean;
         data: {
-            id: number;
-            name: string;
             email: string;
+            phone: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            status: string;
+            id: number;
             userId: number | null;
-            phone: string;
+            name: string;
             country: string;
             timezone: string;
             scheduledAt: Date | null;
@@ -902,7 +941,7 @@ export declare class AdminService {
     } | {
         success: boolean;
         data: {
-            type: "claims" | "quotes" | "users";
+            type: "quotes" | "claims" | "users";
             dateRange: {
                 from: Date;
                 to: Date;
@@ -999,20 +1038,20 @@ export declare class AdminService {
         data: {
             payments: ({
                 user: {
+                    email: string;
                     id: number;
                     name: string;
-                    email: string;
                 } | null;
             } & {
-                id: number;
                 email: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                status: string;
-                amount: number;
+                id: number;
                 userId: number | null;
                 policyNumber: string | null;
                 clientName: string;
+                amount: number;
                 paymentMethod: string;
                 phoneNumber: string | null;
                 cardNumber: string | null;
@@ -1106,18 +1145,18 @@ export declare class AdminService {
         data: {
             outsourcingRequests: ({
                 user: {
+                    email: string;
                     id: number;
                     name: string;
-                    email: string;
                 } | null;
             } & {
-                id: number;
                 email: string;
+                location: string;
+                status: string;
                 createdAt: Date;
                 updatedAt: Date;
-                status: string;
+                id: number;
                 userId: number | null;
-                location: string;
                 organizationName: string;
                 coreFunctions: string | null;
                 address: string | null;
@@ -1148,18 +1187,18 @@ export declare class AdminService {
         success: boolean;
         data: {
             user: {
+                email: string;
                 id: number;
                 name: string;
-                email: string;
             } | null;
         } & {
-            id: number;
             email: string;
+            location: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            status: string;
+            id: number;
             userId: number | null;
-            location: string;
             organizationName: string;
             coreFunctions: string | null;
             address: string | null;
@@ -1179,18 +1218,18 @@ export declare class AdminService {
         success: boolean;
         data: {
             user: {
+                email: string;
                 id: number;
                 name: string;
-                email: string;
             } | null;
         } & {
-            id: number;
             email: string;
+            location: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            status: string;
+            id: number;
             userId: number | null;
-            location: string;
             organizationName: string;
             coreFunctions: string | null;
             address: string | null;
@@ -1224,6 +1263,26 @@ export declare class AdminService {
             generatedAt: string;
         };
         message: string;
+    }>;
+    deleteOutsourcingRequest(id: number): Promise<{
+        success: boolean;
+        message: string;
+        error?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error: any;
+    }>;
+    exportOutsourcingData(format?: 'csv' | 'json'): Promise<{
+        success: boolean;
+        data: string;
+        message?: undefined;
+        error?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error: any;
+        data?: undefined;
     }>;
     getSystemSettings(): Promise<{
         success: boolean;

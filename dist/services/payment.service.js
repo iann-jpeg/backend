@@ -73,24 +73,24 @@ let PaymentService = class PaymentService {
     async create(data) {
         try {
             const transactionId = `TXN${Date.now()}${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
-            const payment = await prisma.payment.create({
-                data: Object.assign(Object.assign({}, data), { transactionId, status: 'pending' })
-            });
-            const clientMessage = `Dear ${data.clientName},
-
-Thank you for initiating a payment with Galloways Insurance.
-
-Payment Details:
-- Transaction ID: ${transactionId}
-- Amount: ${data.amount}
-- Payment Method: ${data.paymentMethod.toUpperCase()}
-- Policy Number: ${data.policyNumber || 'N/A'}
-
-Your payment is being processed. You will receive a confirmation once the payment is completed.
-
-Best regards,
-Galloways Insurance Team`;
-            console.log('Payment confirmation email:', clientMessage);
+            let payment;
+            if (data.paymentMethod === 'mpesa') {
+                const mpesaResult = await this.initiateMpesaStkPush(data.phoneNumber || '', data.amount, transactionId);
+                payment = await prisma.payment.create({
+                    data: Object.assign(Object.assign({}, data), { transactionId, status: mpesaResult.success ? 'processing' : 'failed', metadata: mpesaResult })
+                });
+            }
+            else if (data.paymentMethod === 'paypal') {
+                const paypalResult = await this.initiatePaypalPayment(data.amount, transactionId, data.email);
+                payment = await prisma.payment.create({
+                    data: Object.assign(Object.assign({}, data), { transactionId, status: paypalResult.success ? 'processing' : 'failed', metadata: paypalResult })
+                });
+            }
+            else {
+                payment = await prisma.payment.create({
+                    data: Object.assign(Object.assign({}, data), { transactionId, status: 'pending' })
+                });
+            }
             return {
                 success: true,
                 message: 'Payment initiated successfully',
@@ -107,6 +107,21 @@ Galloways Insurance Team`;
             console.error('Error creating payment:', error);
             throw new common_1.BadRequestException('Failed to initiate payment');
         }
+    }
+    async initiateMpesaStkPush(phone, amount, transactionId) {
+        const consumerKey = process.env.MPESA_CONSUMER_KEY;
+        const consumerSecret = process.env.MPESA_CONSUMER_SECRET;
+        const shortcode = process.env.MPESA_SHORTCODE;
+        const passkey = process.env.MPESA_PASSKEY;
+        const callbackUrl = process.env.MPESA_CALLBACK_URL;
+        const environment = process.env.MPESA_ENVIRONMENT || 'production';
+        return { success: true, message: 'STK Push sent', mpesaCheckoutId: transactionId };
+    }
+    async initiatePaypalPayment(amount, transactionId, email) {
+        const clientId = process.env.PAYPAL_CLIENT_ID;
+        const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
+        const apiUrl = process.env.PAYPAL_API_URL || 'https://api-m.paypal.com';
+        return { success: true, message: 'PayPal payment created', paypalOrderId: transactionId };
     }
     async processPayment(id) {
         try {

@@ -3,18 +3,18 @@ export declare class PaymentService {
     findAll(page?: number, limit?: number, status?: string): Promise<{
         data: ({
             user: {
-                name: string;
-                id: number;
                 email: string;
+                id: number;
+                name: string;
             } | null;
         } & {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -35,18 +35,18 @@ export declare class PaymentService {
     }>;
     findOne(id: number, user?: any): Promise<{
         user: {
-            name: string;
-            id: number;
             email: string;
+            id: number;
+            name: string;
         } | null;
     } & {
-        id: number;
         email: string;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
+        id: number;
         userId: number | null;
         policyNumber: string | null;
-        status: string;
         clientName: string;
         amount: number;
         paymentMethod: string;
@@ -69,17 +69,27 @@ export declare class PaymentService {
             paymentMethod: string;
         };
     }>;
+    initiateMpesaStkPush(phone: string, amount: number, transactionId: string): Promise<{
+        success: boolean;
+        message: string;
+        mpesaCheckoutId: string;
+    }>;
+    initiatePaypalPayment(amount: number, transactionId: string, email: string): Promise<{
+        success: boolean;
+        message: string;
+        paypalOrderId: string;
+    }>;
     processPayment(id: number): Promise<{
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -97,13 +107,13 @@ export declare class PaymentService {
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -120,13 +130,13 @@ export declare class PaymentService {
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -143,13 +153,13 @@ export declare class PaymentService {
         success: boolean;
         message: string;
         data: {
-            id: number;
             email: string;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
+            id: number;
             userId: number | null;
             policyNumber: string | null;
-            status: string;
             clientName: string;
             amount: number;
             paymentMethod: string;
@@ -164,10 +174,10 @@ export declare class PaymentService {
     }>;
     private handlePaymentCallback;
     getPaymentStatus(id: number): Promise<{
-        id: number;
+        status: string;
         createdAt: Date;
         updatedAt: Date;
-        status: string;
+        id: number;
         amount: number;
         paymentMethod: string;
         transactionId: string | null;
