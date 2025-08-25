@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prisma/this.prisma.service';
 import { EmailService } from './email.service';
 import { CreateClaimDto, UpdateClaimDto } from '../config/claim.dto';
 
@@ -13,7 +13,7 @@ export class ClaimsService {
   async findAll({ page = 1, limit = 10 }: { page?: number; limit?: number }) {
     try {
       const [claims, total] = await Promise.all([
-        this.prisma.claim.findMany({
+        this.this.prisma.claim.findMany({
           skip: (page - 1) * limit,
           take: limit,
           orderBy: { createdAt: 'desc' },
@@ -37,11 +37,11 @@ export class ClaimsService {
             },
           },
         }),
-        this.prisma.claim.count()
+        this.this.prisma.claim.count()
       ]);
 
       // Add document URLs to claims
-      const claimsWithUrls = claims.map((claim: any) => ({
+      const claimsWithUrls = claims.map(claim => ({
         ...claim,
         documentUrls: claim.documents.map((doc: any) => 
           `${process.env.API_BASE_URL || 'http://localhost:3001/api'}/documents/view/${doc.id}`
@@ -91,7 +91,7 @@ export class ClaimsService {
       // Add document URLs
       const claimWithUrls = {
         ...claim,
-        documentUrls: claim.documents.map((doc: any) => 
+        documentUrls: claim.documents.map(doc => 
           `${process.env.API_BASE_URL || 'http://localhost:3001/api'}/documents/view/${doc.id}`
         ),
       };
