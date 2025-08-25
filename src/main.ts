@@ -39,16 +39,21 @@ async function bootstrap() {
   );
 
   // Configure CORS for frontend
-    app.enableCors({
-      origin: [
-        'https://galloway-secure-kenya.vercel.app',
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-      ],
-      credentials: true,
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
-      exposedHeaders: 'Authorization',
+  app.enableCors({
+    origin: [
+      'https://galloways.co.ke',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+    ],
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
+    exposedHeaders: 'Authorization',
+  });    // Set CORP and CSP headers for all responses
+    app.use((req: any, res: any, next: () => void) => {
+      res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+      res.header('Content-Security-Policy', "default-src 'self'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; connect-src 'self' https://galloways.co.ke http://localhost:* http://127.0.0.1:*; form-action 'self'; script-src 'self'; base-uri 'self'; font-src 'self' https: data:; frame-ancestors 'self'; object-src 'none'; script-src-attr 'none'; upgrade-insecure-requests");
+      next();
     });
 
   // Set API prefix
