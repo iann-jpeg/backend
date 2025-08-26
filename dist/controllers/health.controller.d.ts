@@ -13,31 +13,42 @@ export declare class HealthController {
                 status: string;
                 connection: boolean;
                 queries: boolean;
+                url_configured: boolean;
             };
-            dashboard: {
+            application: {
                 status: string;
+                memory_usage: NodeJS.MemoryUsage;
+                uptime: number;
             };
         };
         environment: string;
         version: string;
+        deployment: {
+            platform: string;
+            tables_expected: string[];
+        };
         error?: undefined;
     } | {
         status: string;
         timestamp: string;
+        responseTime: string;
         error: string;
         services: {
             database: {
                 status: string;
                 connection?: undefined;
                 queries?: undefined;
+                url_configured?: undefined;
             };
-            dashboard: {
+            application: {
                 status: string;
+                memory_usage?: undefined;
+                uptime?: undefined;
             };
         };
-        responseTime?: undefined;
         environment?: undefined;
         version?: undefined;
+        deployment?: undefined;
     }>;
     getDeepHealth(): Promise<{
         status: string;
@@ -46,11 +57,11 @@ export declare class HealthController {
         database: {
             status: string;
             tables: {
-                users: number;
-                claims: number;
-                quotes: number;
-                consultations: number;
-                payments: number;
+                users: any;
+                claims: any;
+                quotes: any;
+                consultations: any;
+                payments: any;
             };
         };
         performance: {

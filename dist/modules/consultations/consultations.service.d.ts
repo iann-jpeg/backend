@@ -5,26 +5,18 @@ export declare class ConsultationsService {
     } | {
         success: boolean;
         consultation: {
-            message: string;
             name: string;
-            status: string;
             id: number;
-            email: string;
+            userId: number | null;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: number | null;
+            email: string;
             phone: string;
-            country: string | null;
-            timezone: string | null;
+            country: string;
+            timezone: string;
+            serviceInterest: string;
             scheduledAt: Date | null;
-            company: string | null;
-            consultationDate: string;
-            consultationTime: string;
-            serviceType: string;
-            duration: number | null;
-            meetingLink: string | null;
-            meetingType: string | null;
-            notes: string | null;
         };
     }>;
     getConsultations(page?: number, limit?: number): Promise<{
@@ -32,26 +24,18 @@ export declare class ConsultationsService {
         message: any;
     } | {
         consultations: {
-            message: string;
             name: string;
-            status: string;
             id: number;
-            email: string;
+            userId: number | null;
+            status: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: number | null;
+            email: string;
             phone: string;
-            country: string | null;
-            timezone: string | null;
+            country: string;
+            timezone: string;
+            serviceInterest: string;
             scheduledAt: Date | null;
-            company: string | null;
-            consultationDate: string;
-            consultationTime: string;
-            serviceType: string;
-            duration: number | null;
-            meetingLink: string | null;
-            meetingType: string | null;
-            notes: string | null;
         }[];
         total: number;
     }>;

@@ -16,54 +16,75 @@ export class HealthController {
     const startTime = Date.now();
     
     try {
-      // Test database connection
-      const dbHealthy = await this.prisma.healthCheck();
-      
-      // Test basic queries
+      // Test database connection with aggressive retry
+      let dbHealthy = false;
       let queryTest = false;
+      
       try {
-        await this.prisma.user.count();
-        queryTest = true;
+        dbHealthy = await this.prisma.healthCheck();
       } catch (error) {
-        console.warn('Query test failed:', error);
+        console.warn('Database health check failed, trying basic query...');
+        try {
+          await this.prisma.$queryRaw`SELECT 1`;
+          dbHealthy = true;
+        } catch (basicError) {
+          console.error('Basic database query failed:', basicError);
+        }
       }
-
-      // Test dashboard service
-      let dashboardHealthy = false;
-      try {
-        await this.dashboardService.getDashboardStats({});
-        dashboardHealthy = true;
-      } catch (error) {
-        console.warn('Dashboard service test failed:', error);
+      
+      // Test basic queries with fallback
+      if (dbHealthy) {
+        try {
+          await this.prisma.user.count();
+          queryTest = true;
+        } catch (error) {
+          console.warn('User count query failed, trying alternative...');
+          try {
+            await this.prisma.$queryRaw`SELECT COUNT(*) FROM "User"`;
+            queryTest = true;
+          } catch (altError) {
+            console.warn('Alternative query failed:', altError);
+          }
+        }
       }
 
       const responseTime = Date.now() - startTime;
+      const isHealthy = dbHealthy && queryTest;
 
       return {
-        status: dbHealthy && queryTest ? 'healthy' : 'degraded',
+        status: isHealthy ? 'healthy' : 'degraded',
         timestamp: new Date().toISOString(),
         responseTime: `${responseTime}ms`,
         services: {
           database: {
             status: dbHealthy ? 'up' : 'down',
             connection: dbHealthy,
-            queries: queryTest
+            queries: queryTest,
+            url_configured: !!process.env.DATABASE_URL
           },
-          dashboard: {
-            status: dashboardHealthy ? 'up' : 'down'
+          application: {
+            status: 'up',
+            memory_usage: process.memoryUsage(),
+            uptime: process.uptime()
           }
         },
         environment: process.env.NODE_ENV || 'development',
-        version: '1.0.0'
+        version: '1.0.0',
+        deployment: {
+          platform: 'railway',
+          tables_expected: ['User', 'Claim', 'Quote', 'Consultation', 'Payment', 'Document', 'Admin']
+        }
       };
     } catch (error) {
+      const responseTime = Date.now() - startTime;
       return {
         status: 'unhealthy',
         timestamp: new Date().toISOString(),
+        responseTime: `${responseTime}ms`,
         error: error instanceof Error ? error.message : 'Unknown error',
         services: {
-          database: { status: 'down' },
-          dashboard: { status: 'down' }
+          database: { status: 'unknown' },
+          application: { status: 'partial' }
         }
       };
     }
