@@ -1,0 +1,125 @@
+import { EmailService } from './email.service';
+import { CreateQuoteDto, UpdateQuoteDto } from '../config/quote.dto';
+export declare class QuotesService {
+    private readonly emailService;
+    createWithDocuments(data: CreateQuoteDto, documents?: Express.Multer.File[]): Promise<{
+        location: string | null;
+        details: string | null;
+        status: string;
+        id: number;
+        userId: number | null;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        phone: string;
+        product: string;
+        firstName: string;
+        lastName: string;
+        budget: string | null;
+        coverage: string | null;
+        contactMethod: string;
+        bestTime: string | null;
+    }>;
+    constructor(emailService: EmailService);
+    findAll({ page, limit }: {
+        page?: number;
+        limit?: number;
+    }): Promise<{
+        data: {
+            location: string | null;
+            details: string | null;
+            status: string;
+            id: number;
+            userId: number | null;
+            createdAt: Date;
+            updatedAt: Date;
+            email: string;
+            phone: string;
+            product: string;
+            firstName: string;
+            lastName: string;
+            budget: string | null;
+            coverage: string | null;
+            contactMethod: string;
+            bestTime: string | null;
+        }[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+    }>;
+    findOne(id: number): Promise<{
+        location: string | null;
+        details: string | null;
+        status: string;
+        id: number;
+        userId: number | null;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        phone: string;
+        product: string;
+        firstName: string;
+        lastName: string;
+        budget: string | null;
+        coverage: string | null;
+        contactMethod: string;
+        bestTime: string | null;
+    }>;
+    create(data: CreateQuoteDto): Promise<{
+        location: string | null;
+        details: string | null;
+        status: string;
+        id: number;
+        userId: number | null;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        phone: string;
+        product: string;
+        firstName: string;
+        lastName: string;
+        budget: string | null;
+        coverage: string | null;
+        contactMethod: string;
+        bestTime: string | null;
+    }>;
+    update(id: number, data: UpdateQuoteDto): Promise<{
+        location: string | null;
+        details: string | null;
+        status: string;
+        id: number;
+        userId: number | null;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        phone: string;
+        product: string;
+        firstName: string;
+        lastName: string;
+        budget: string | null;
+        coverage: string | null;
+        contactMethod: string;
+        bestTime: string | null;
+    }>;
+    remove(id: number): Promise<{
+        location: string | null;
+        details: string | null;
+        status: string;
+        id: number;
+        userId: number | null;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        phone: string;
+        product: string;
+        firstName: string;
+        lastName: string;
+        budget: string | null;
+        coverage: string | null;
+        contactMethod: string;
+        bestTime: string | null;
+    }>;
+}
