@@ -7,22 +7,7 @@ export declare class ClaimsService {
         page?: number;
         limit?: number;
     }): Promise<{
-        data: {
-            documentUrls: any;
-            id: number;
-            userId: number | null;
-            policyNumber: string;
-            claimType: string;
-            incidentDate: Date;
-            estimatedLoss: number;
-            description: string;
-            status: string;
-            createdAt: Date;
-            updatedAt: Date;
-            submitterEmail: string | null;
-            submitterName: string | null;
-            submitterPhone: string | null;
-        }[];
+        data: any[];
         meta: {
             total: number;
             page: number;
@@ -31,7 +16,21 @@ export declare class ClaimsService {
         };
     }>;
     findOne(id: number): Promise<{
-        documentUrls: any;
+        documentUrls: string[];
+        user: {
+            id: number;
+            name: string;
+            email: string;
+        } | null;
+        document: {
+            id: number;
+            createdAt: Date;
+            filename: string;
+            originalName: string;
+            mimeType: string;
+            size: number;
+        }[];
+        status: string;
         id: number;
         userId: number | null;
         policyNumber: string;
@@ -39,17 +38,17 @@ export declare class ClaimsService {
         incidentDate: Date;
         estimatedLoss: number;
         description: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
         submitterEmail: string | null;
         submitterName: string | null;
         submitterPhone: string | null;
     }>;
-    getClaimDocuments(id: number): Promise<any>;
+    getClaimDocuments(id: number): Promise<any[]>;
     create(data: CreateClaimDto & {
         documentDetails?: any[];
     }): Promise<{
+        status: string;
         id: number;
         userId: number | null;
         policyNumber: string;
@@ -57,7 +56,6 @@ export declare class ClaimsService {
         incidentDate: Date;
         estimatedLoss: number;
         description: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
         submitterEmail: string | null;
@@ -65,6 +63,7 @@ export declare class ClaimsService {
         submitterPhone: string | null;
     }>;
     update(id: number, data: any): Promise<{
+        status: string;
         id: number;
         userId: number | null;
         policyNumber: string;
@@ -72,7 +71,6 @@ export declare class ClaimsService {
         incidentDate: Date;
         estimatedLoss: number;
         description: string;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
         submitterEmail: string | null;

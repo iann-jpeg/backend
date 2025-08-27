@@ -14,7 +14,7 @@ async function bootstrap() {
     // Test basic query
     const userCount = await prisma.user.count();
     console.log(`✅ DATABASE QUERY TEST PASSED - ${userCount} users found`);
-  } catch (error) {
+  } catch (error: any) {
     console.log('⚠️ DATABASE CONNECTION ISSUES:', error.message);
     console.log('⚠️ CONTINUING WITH MOCK DATA...');
   }

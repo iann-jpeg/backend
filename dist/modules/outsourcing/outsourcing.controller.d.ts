@@ -7,13 +7,43 @@ export declare class OutsourcingController {
         message: any;
     } | {
         success: boolean;
-        outsourcing: any;
+        outsourcing: {
+            id: number;
+            userId: number | null;
+            description: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
+            email: string | null;
+            category: string;
+            budget: number | null;
+            title: string;
+            organizationName: string | null;
+            services: string[];
+            budgetRange: string | null;
+            timeline: string | null;
+        };
     }>;
     getOutsourcingRequests(): Promise<{
         success: boolean;
         message: any;
     } | {
-        outsourcing: any;
-        total: any;
+        outsourcing: {
+            id: number;
+            userId: number | null;
+            description: string;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
+            email: string | null;
+            category: string;
+            budget: number | null;
+            title: string;
+            organizationName: string | null;
+            services: string[];
+            budgetRange: string | null;
+            timeline: string | null;
+        }[];
+        total: number;
     }>;
 }

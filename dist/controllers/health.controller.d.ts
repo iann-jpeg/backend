@@ -1,9 +1,9 @@
 import { PrismaService } from '../prisma/prisma.service';
-import { DashboardService } from '../services/dashboard.service';
+import { MinimalDashboardService } from '../services/minimal-dashboard.service';
 export declare class HealthController {
     private readonly prisma;
-    private readonly dashboardService;
-    constructor(prisma: PrismaService, dashboardService: DashboardService);
+    private readonly minimalDashboard;
+    constructor(prisma: PrismaService, minimalDashboard: MinimalDashboardService);
     getHealth(): Promise<{
         status: string;
         timestamp: string;
@@ -15,6 +15,11 @@ export declare class HealthController {
                 queries: boolean;
                 url_configured: boolean;
             };
+            dashboard: {
+                status: string;
+                message: string;
+                fallback_available: boolean;
+            };
             application: {
                 status: string;
                 memory_usage: NodeJS.MemoryUsage;
@@ -25,7 +30,8 @@ export declare class HealthController {
         version: string;
         deployment: {
             platform: string;
-            tables_expected: string[];
+            tables_available: string[];
+            tables_missing: string[];
         };
         error?: undefined;
     } | {
@@ -45,6 +51,7 @@ export declare class HealthController {
                 memory_usage?: undefined;
                 uptime?: undefined;
             };
+            dashboard?: undefined;
         };
         environment?: undefined;
         version?: undefined;
@@ -57,11 +64,13 @@ export declare class HealthController {
         database: {
             status: string;
             tables: {
-                users: any;
-                claims: any;
-                quotes: any;
-                consultations: any;
-                payments: any;
+                users: number;
+                claims: number;
+                quotes: number;
+                consultations: number;
+                diaspora: number;
+                documents: number;
+                products: number;
             };
         };
         performance: {

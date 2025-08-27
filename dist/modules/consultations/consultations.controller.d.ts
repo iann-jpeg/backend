@@ -16,10 +16,16 @@ export declare class ConsultationsController {
             updatedAt: Date;
             email: string;
             phone: string;
-            country: string;
-            timezone: string;
+            country: string | null;
+            timezone: string | null;
             serviceInterest: string;
+            serviceType: string | null;
+            company: string | null;
             scheduledAt: Date | null;
+            consultationDate: Date | null;
+            meetingLink: string | null;
+            duration: number | null;
+            notes: string | null;
         };
     }>;
     getConsultations(): Promise<{
@@ -35,10 +41,16 @@ export declare class ConsultationsController {
             updatedAt: Date;
             email: string;
             phone: string;
-            country: string;
-            timezone: string;
+            country: string | null;
+            timezone: string | null;
             serviceInterest: string;
+            serviceType: string | null;
+            company: string | null;
             scheduledAt: Date | null;
+            consultationDate: Date | null;
+            meetingLink: string | null;
+            duration: number | null;
+            notes: string | null;
         }[];
         total: number;
     }>;

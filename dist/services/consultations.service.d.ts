@@ -16,10 +16,16 @@ export declare class ConsultationsService {
             updatedAt: Date;
             email: string;
             phone: string;
-            country: string;
-            timezone: string;
+            country: string | null;
+            timezone: string | null;
             serviceInterest: string;
+            serviceType: string | null;
+            company: string | null;
             scheduledAt: Date | null;
+            consultationDate: Date | null;
+            meetingLink: string | null;
+            duration: number | null;
+            notes: string | null;
         }[];
         meta: {
             total: number;
@@ -37,10 +43,16 @@ export declare class ConsultationsService {
         updatedAt: Date;
         email: string;
         phone: string;
-        country: string;
-        timezone: string;
+        country: string | null;
+        timezone: string | null;
         serviceInterest: string;
+        serviceType: string | null;
+        company: string | null;
         scheduledAt: Date | null;
+        consultationDate: Date | null;
+        meetingLink: string | null;
+        duration: number | null;
+        notes: string | null;
     }>;
     create(data: CreateConsultationDto): Promise<{
         success: boolean;
@@ -54,10 +66,16 @@ export declare class ConsultationsService {
             updatedAt: Date;
             email: string;
             phone: string;
-            country: string;
-            timezone: string;
+            country: string | null;
+            timezone: string | null;
             serviceInterest: string;
+            serviceType: string | null;
+            company: string | null;
             scheduledAt: Date | null;
+            consultationDate: Date | null;
+            meetingLink: string | null;
+            duration: number | null;
+            notes: string | null;
         };
     }>;
     update(id: number, data: UpdateConsultationDto): Promise<{
@@ -69,10 +87,16 @@ export declare class ConsultationsService {
         updatedAt: Date;
         email: string;
         phone: string;
-        country: string;
-        timezone: string;
+        country: string | null;
+        timezone: string | null;
         serviceInterest: string;
+        serviceType: string | null;
+        company: string | null;
         scheduledAt: Date | null;
+        consultationDate: Date | null;
+        meetingLink: string | null;
+        duration: number | null;
+        notes: string | null;
     }>;
     remove(id: number): Promise<{
         name: string;
@@ -83,9 +107,15 @@ export declare class ConsultationsService {
         updatedAt: Date;
         email: string;
         phone: string;
-        country: string;
-        timezone: string;
+        country: string | null;
+        timezone: string | null;
         serviceInterest: string;
+        serviceType: string | null;
+        company: string | null;
         scheduledAt: Date | null;
+        consultationDate: Date | null;
+        meetingLink: string | null;
+        duration: number | null;
+        notes: string | null;
     }>;
 }

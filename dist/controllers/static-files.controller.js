@@ -20,18 +20,24 @@ const public_decorator_1 = require("../middleware/public.decorator");
 let StaticFilesController = class StaticFilesController {
     async downloadFile(filename, res) {
         try {
+            // Sanitize filename to prevent directory traversal attacks
             const sanitizedFilename = filename.replace(/\.\./g, '').replace(/\//g, '');
+            // Get the path to the frontend Downloads folder from backend
             const downloadsPath = (0, path_1.join)(process.cwd(), '..', 'frontend', 'public', 'Downloads');
             const filePath = (0, path_1.join)(downloadsPath, sanitizedFilename);
+            // Check if file exists
             if (!(0, fs_1.existsSync)(filePath)) {
                 throw new common_1.NotFoundException(`File ${sanitizedFilename} not found`);
             }
+            // Verify it's a PDF file (for security)
             if (!sanitizedFilename.toLowerCase().endsWith('.pdf')) {
                 throw new common_1.BadRequestException('Only PDF files are allowed for download');
             }
+            // Set appropriate headers
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader('Content-Disposition', `attachment; filename="${sanitizedFilename}"`);
-            res.setHeader('Cache-Control', 'public, max-age=86400');
+            res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 1 day
+            // Send file
             res.sendFile(filePath, (err) => {
                 if (err) {
                     console.error('Error sending file:', err);
@@ -49,6 +55,7 @@ let StaticFilesController = class StaticFilesController {
     }
     async listDownloadableFiles() {
         try {
+            // List of available PDF files in the Downloads folder
             const availableFiles = [
                 {
                     filename: 'Claim_Form_Motor_-_Ammended.pdf',
@@ -176,4 +183,3 @@ exports.StaticFilesController = StaticFilesController = __decorate([
     (0, common_1.Controller)('static'),
     (0, public_decorator_1.Public)()
 ], StaticFilesController);
-//# sourceMappingURL=static-files.controller.js.map

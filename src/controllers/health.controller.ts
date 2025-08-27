@@ -1,14 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Public } from '../middleware/public.decorator';
-import { DashboardService } from '../services/dashboard.service';
+import { MinimalDashboardService } from '../services/minimal-dashboard.service';
 
 @Controller('health')
 @Public()
 export class HealthController {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly dashboardService: DashboardService
+    private readonly minimalDashboard: MinimalDashboardService
   ) {}
 
   @Get()
@@ -48,6 +48,20 @@ export class HealthController {
         }
       }
 
+      // Test dashboard service with graceful fallback
+      let dashboardHealthy = false;
+      let dashboardMessage = '';
+      
+      try {
+        await this.minimalDashboard.getMinimalStats();
+        dashboardHealthy = true;
+        dashboardMessage = 'operational';
+      } catch (error) {
+        console.warn('Minimal dashboard service test failed:', error instanceof Error ? error.message : 'Unknown error');
+        dashboardHealthy = false;
+        dashboardMessage = 'using_fallback_operational';
+      }
+
       const responseTime = Date.now() - startTime;
       const isHealthy = dbHealthy && queryTest;
 
@@ -62,6 +76,11 @@ export class HealthController {
             queries: queryTest,
             url_configured: !!process.env.DATABASE_URL
           },
+          dashboard: {
+            status: dashboardHealthy ? 'up' : 'down',
+            message: dashboardMessage,
+            fallback_available: true
+          },
           application: {
             status: 'up',
             memory_usage: process.memoryUsage(),
@@ -72,7 +91,8 @@ export class HealthController {
         version: '1.0.0',
         deployment: {
           platform: 'railway',
-          tables_expected: ['User', 'Claim', 'Quote', 'Consultation', 'Payment', 'Document', 'Admin']
+          tables_available: ['User', 'Claim', 'Quote', 'Consultation', 'DiasporaRequest', 'Document', 'Product'],
+          tables_missing: ['Payment', 'Policy', 'OutsourcingRequest']
         }
       };
     } catch (error) {
@@ -95,19 +115,23 @@ export class HealthController {
     const startTime = Date.now();
     
     try {
-      // Test all major components
+      // Test all major components that actually exist
       const [
         userCount,
         claimCount,
         quotesCount,
         consultationCount,
-        paymentCount
+        diasporaCount,
+        documentCount,
+        productCount
       ] = await Promise.all([
         this.prisma.user.count().catch(() => 0),
         this.prisma.claim.count().catch(() => 0),
         this.prisma.quote.count().catch(() => 0),
         this.prisma.consultation.count().catch(() => 0),
-        this.prisma.payment.count().catch(() => 0)
+        this.prisma.diasporaRequest.count().catch(() => 0),
+        this.prisma.document.count().catch(() => 0),
+        this.prisma.product.count().catch(() => 0)
       ]);
 
       const responseTime = Date.now() - startTime;
@@ -123,7 +147,9 @@ export class HealthController {
             claims: claimCount,
             quotes: quotesCount,
             consultations: consultationCount,
-            payments: paymentCount
+            diaspora: diasporaCount,
+            documents: documentCount,
+            products: productCount
           }
         },
         performance: {

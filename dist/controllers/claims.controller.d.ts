@@ -18,7 +18,20 @@ export declare class ClaimsController {
     findOne(id: string): Promise<{
         success: boolean;
         data: {
-            documentUrls: any;
+            documentUrls: string[];
+            user: {
+                name: string;
+                id: number;
+                email: string;
+            } | null;
+            document: {
+                id: number;
+                createdAt: Date;
+                filename: string;
+                originalName: string;
+                mimeType: string;
+                size: number;
+            }[];
             id: number;
             userId: number | null;
             policyNumber: string;
@@ -36,7 +49,14 @@ export declare class ClaimsController {
     }>;
     getClaimDocuments(id: string): Promise<{
         success: boolean;
-        data: any;
+        data: {
+            id: number;
+            createdAt: Date;
+            filename: string;
+            originalName: string;
+            mimeType: string;
+            size: number;
+        }[];
     }>;
     create(data: CreateClaimDto, documents?: Express.Multer.File[]): Promise<{
         success: boolean;
@@ -82,6 +102,12 @@ export declare class ClaimsController {
         success: boolean;
         message: string;
         data: {
+            user: {
+                name: string;
+                id: number;
+                email: string;
+            } | null;
+        } & {
             id: number;
             userId: number | null;
             policyNumber: string;

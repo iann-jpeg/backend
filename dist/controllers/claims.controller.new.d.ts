@@ -18,7 +18,20 @@ export declare class ClaimsController {
     findOne(id: string): Promise<{
         success: boolean;
         data: {
-            documentUrls: any;
+            documentUrls: string[];
+            user: {
+                name: string;
+                id: number;
+                email: string;
+            } | null;
+            document: {
+                id: number;
+                createdAt: Date;
+                filename: string;
+                originalName: string;
+                mimeType: string;
+                size: number;
+            }[];
             id: number;
             userId: number | null;
             policyNumber: string;

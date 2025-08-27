@@ -18,7 +18,20 @@ export declare class ClaimsService {
         };
     }>;
     findOne(id: number): Promise<{
-        documentUrls: any;
+        documentUrls: string[];
+        user: {
+            name: string;
+            id: number;
+            email: string;
+        } | null;
+        document: {
+            id: number;
+            createdAt: Date;
+            filename: string;
+            originalName: string;
+            mimeType: string;
+            size: number;
+        }[];
         id: number;
         userId: number | null;
         policyNumber: string;
@@ -66,6 +79,12 @@ export declare class ClaimsService {
         submitterPhone: string | null;
     }>;
     updateStatus(id: number, status: string): Promise<{
+        user: {
+            name: string;
+            id: number;
+            email: string;
+        } | null;
+    } & {
         id: number;
         userId: number | null;
         policyNumber: string;

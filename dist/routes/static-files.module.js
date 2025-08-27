@@ -17,4 +17,3 @@ exports.StaticFilesModule = StaticFilesModule = __decorate([
         controllers: [static_files_controller_1.StaticFilesController],
     })
 ], StaticFilesModule);
-//# sourceMappingURL=static-files.module.js.map
